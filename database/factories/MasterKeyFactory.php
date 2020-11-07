@@ -4,16 +4,17 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-use App\Models\User;
+use App\Models\MasterKey;
+use App\Supports\Key;
 
-class UserFactory extends Factory
+class MasterKeyFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = User::class;
+    protected $model = MasterKey::class;
 
     /**
      * Define the model's default state.
@@ -23,9 +24,8 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'discord_id' => $this->faker->unique()->numberBetween(100, 99999),
-            'master_key_id' => $this->faker->unique()->numberBetween(1, 1000),
-            'status' => 'active'
+            'key' => (new Key)->generate(),
+            'isAvailable' => 1
         ];
     }
 }
