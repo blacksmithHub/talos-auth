@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\Contracts\UserServiceInterface;
-use App\Http\Requests\User\{ BindRequest, UnbindRequest };
+use App\Http\Requests\User\{ BindRequest, UnbindRequest, VerifyRequest };
 
 class UserController extends Controller
 {
@@ -44,5 +44,16 @@ class UserController extends Controller
     public function unbind(UnbindRequest $request)
     {
         return $this->services->unbind($request->validated());
+    }
+
+    /**
+     * Verify a user key.
+     *
+     * @param  \App\Http\Requests\User\VerifyRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function verify(VerifyRequest $request)
+    {
+        return $this->services->verify($request->validated());
     }
 }

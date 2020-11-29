@@ -34,6 +34,6 @@ class MasterKeyRepository extends Repository implements MasterKeyRepositoryInter
     public function isBound($key){
         $model = $this->model->where('key', $key)->where('isAvailable', false)->with('user')->first();
         
-        return ($model && $model->user && $model->user->status === 'idle');
+        return ($model && $model->user && $model->user->status === 'active');
     }
 }

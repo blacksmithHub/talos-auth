@@ -28,4 +28,13 @@ class UserRepository extends Repository implements UserRepositoryInterface
 
         return ($model && $model->masterKey && $model->masterKey->key === $key);
     }
+
+    /**
+     * Check if master key exists.
+     * 
+     * @param $key
+     */
+    public function isExists($id) {
+        return $this->model->where('discord_id', $id)->exists();
+    }
 }

@@ -15,5 +15,6 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::post('bind', [UserController::class, 'bind']);
+Route::put('bind', [UserController::class, 'bind']);
 Route::put('unbind', [UserController::class, 'unbind']);
+Route::post('verify', [UserController::class, 'verify']);

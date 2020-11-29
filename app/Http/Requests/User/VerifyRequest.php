@@ -4,13 +4,12 @@ namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-use App\Rules\User\{
-    AuthorizeRule as UserAuthorizeRule,
-    ExistRule as UserExistRule
+use App\Rules\User\ExistRule as UserExistRule;
+use App\Rules\MasterKey\{
+    ExistRule as MasterKeyExistRule,
+    BindRule as MasterKeyBindRule
 };
-use App\Rules\MasterKey\ExistRule as MasterKeyExistRule;
-
-class UnbindRequest extends FormRequest
+class VerifyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -32,12 +31,12 @@ class UnbindRequest extends FormRequest
         return [
             'discord_id' => [
                 'required',
-                new UserExistRule,
-                new UserAuthorizeRule
+                new UserExistRule
             ],
             'key' => [
                 'required',
-                new MasterKeyExistRule
+                new MasterKeyExistRule,
+                new MasterKeyBindRule
             ]
         ];
     }

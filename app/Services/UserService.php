@@ -42,6 +42,15 @@ class UserService extends Service implements UserServiceInterface
     public function unbind(array $request){
         $model = $this->model->where('discord_id', Arr::get($request, 'discord_id'))->first();
 
-        return $this->repository->update($model->id, ['discord_id' => null, 'status' => 'idle']);
+        return $this->repository->update($model->id, ['status' => 'idle']);
+    }
+
+    /**
+     * Verify a user key
+     *
+     * @param array $request
+     */
+    public function verify(array $request){
+        return $this->repository->authorize(Arr::get($request, 'discord_id'), Arr::get($request, 'key'));
     }
 }

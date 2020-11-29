@@ -19,4 +19,12 @@ interface UserServiceInterface
      * @return mixed
      */
     public function unbind(array $request);
+
+    /**
+     * Verify a user key
+     *
+     * @param array $request
+     * @return mixed
+     */
+    public function verify(array $request);
 }
