@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\User;
+use App\Repositories\Contracts\MasterKeyRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
 
 class UserRepository extends Repository implements UserRepositoryInterface
@@ -12,9 +13,10 @@ class UserRepository extends Repository implements UserRepositoryInterface
      *
      * @param \App\Models\User
      */
-    public function __construct(User $model)
+    public function __construct(User $model, MasterKeyRepositoryInterface $masterKey)
     {
         $this->model = $model;
+        $this->masterKey = $masterKey;
     }
 
     /**
@@ -24,17 +26,26 @@ class UserRepository extends Repository implements UserRepositoryInterface
      * @param $key
      */
     public function authorize($id, $key) {
-        $model = $this->model->where('discord_id', $id)->with('masterKey')->first();
+        $model = $this->model->where('discord_id', $id)->where('status', 'active')->with('masterKey')->first();
 
         return ($model && $model->masterKey && $model->masterKey->key === $key);
     }
 
     /**
-     * Check if master key exists.
+     * Check if user is bindable
      * 
+     * @param $id
      * @param $key
      */
-    public function isExists($id) {
-        return $this->model->where('discord_id', $id)->exists();
+    public function isBindable($id, $key) {
+        $model = $this->model->where('discord_id', $id)->with('masterKey')->first();
+
+        if(!$model && $this->masterKey->hasUser($key)) return false;
+
+        if($model && $model->masterKey && $model->masterKey->key !== $key) return false;
+
+        if($model && $model->status === 'active') return false;
+
+        return true;
     }
 }

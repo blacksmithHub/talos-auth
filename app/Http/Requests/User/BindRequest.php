@@ -4,10 +4,8 @@ namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-use App\Rules\MasterKey\{
-    ExistRule as MasterKeyExistRule,
-    BindRule as MasterKeyBindRule
-};
+use App\Rules\MasterKey\PurchasedRule as MasterKeyPurchasedRule;
+use App\Rules\User\BindRule as UserBindRule;
 
 class BindRequest extends FormRequest
 {
@@ -30,12 +28,14 @@ class BindRequest extends FormRequest
     {
         return [
             'discord_id' => [
-                'required'
+                'required',
+                'numeric',
+                new UserBindRule
             ],
             'key' => [
                 'required',
-                new MasterKeyExistRule,
-                new MasterKeyBindRule
+                'string',
+                new MasterKeyPurchasedRule
             ]
         ];
     }

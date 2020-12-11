@@ -18,22 +18,22 @@ class MasterKeyRepository extends Repository implements MasterKeyRepositoryInter
     }
 
     /**
-     * Check if master key exists.
+     * Check if key is already purchased
      * 
      * @param $key
      */
-    public function isExists($key) {
+    public function isPurchased($key){
         return $this->model->where('key', $key)->where('isAvailable', false)->exists();
     }
 
     /**
-     * Check if user and master key is already bound
+     * Check if key has user
      * 
      * @param $key
      */
-    public function isBound($key){
-        $model = $this->model->where('key', $key)->where('isAvailable', false)->with('user')->first();
-        
-        return ($model && $model->user && $model->user->status === 'active');
+    public function hasUser($key) {
+        $model = $this->model->where('key', $key)->where('isAvailable', 0)->with('user')->first();
+
+        return ($model && $model->user && $model->user->discord_id);
     }
 }

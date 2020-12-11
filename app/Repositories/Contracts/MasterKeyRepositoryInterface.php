@@ -5,16 +5,16 @@ namespace App\Repositories\Contracts;
 interface MasterKeyRepositoryInterface
 {
     /**
-     * Check if master key exists.
+     * Check if key is purchased
      * 
      * @param $key
      */
-    public function isExists($key);
+    public function isPurchased($key);
 
     /**
-     * Check if user and master is already bound
+     * Check if key has user
      * 
      * @param $key
      */
-    public function isBound($key);
+    public function hasUser($key);
 }

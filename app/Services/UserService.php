@@ -3,10 +3,11 @@
 namespace App\Services;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Services\Contracts\UserServiceInterface;
-use App\Models\{User, MasterKey};
+use App\Models\User;
 
 class UserService extends Service implements UserServiceInterface
 {
@@ -15,11 +16,10 @@ class UserService extends Service implements UserServiceInterface
      *
      * @param App\Repositories\Contracts\UserRepositoryInterface
      */
-    public function __construct(UserRepositoryInterface $repository, MasterKey $masterKey, User $model)
+    public function __construct(UserRepositoryInterface $repository, User $model)
     {
         $this->model = $model;
         $this->repository = $repository;
-        $this->masterKey = $masterKey;
     }
 
     /**
@@ -28,10 +28,27 @@ class UserService extends Service implements UserServiceInterface
      * @param array $request
      */
     public function bind(array $request){
-        $masterKey = $this->masterKey->where('key', Arr::get($request, 'key'))->where('isAvailable', false)->with('user')->first();
-        $model = $this->model->where('master_key_id', $masterKey->id)->first();
+        DB::beginTransaction();
 
-        return $this->repository->update($model->id, ['discord_id' => Arr::get($request, 'discord_id'), 'status' => 'active']);
+        try {
+            $model = $this->model->where('discord_id', Arr::get($request, 'discord_id'))->where('status', 'idle')->first();
+
+            $data = [
+                'username' => Arr::get($request, 'username'),
+                'discriminator' => Arr::get($request, 'discriminator'),
+                'status' => 'active'
+            ];
+
+            $response = $this->repository->update($model->id, $data);
+
+            DB::commit();
+
+            return $response;
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            throw $e;
+        }
     }
 
     /**
@@ -40,9 +57,19 @@ class UserService extends Service implements UserServiceInterface
      * @param array $request
      */
     public function unbind(array $request){
-        $model = $this->model->where('discord_id', Arr::get($request, 'discord_id'))->first();
+        DB::beginTransaction();
 
-        return $this->repository->update($model->id, ['status' => 'idle']);
+        try {
+            $model = $this->model->where('discord_id', Arr::get($request, 'discord_id'))->where('status', 'active')->first();
+
+            $response = $this->repository->update($model->id, ['status' => 'idle']);
+
+            return $response;
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            throw $e;
+        }
     }
 
     /**

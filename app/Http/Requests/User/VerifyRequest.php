@@ -4,11 +4,8 @@ namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-use App\Rules\User\ExistRule as UserExistRule;
-use App\Rules\MasterKey\{
-    ExistRule as MasterKeyExistRule,
-    BindRule as MasterKeyBindRule
-};
+use App\Rules\User\AuthorizeRule as UserAuthorizeRule;
+use App\Rules\MasterKey\PurchasedRule as MasterKeyPurchasedRule;
 class VerifyRequest extends FormRequest
 {
     /**
@@ -31,12 +28,13 @@ class VerifyRequest extends FormRequest
         return [
             'discord_id' => [
                 'required',
-                new UserExistRule
+                'numeric',
+                new UserAuthorizeRule
             ],
             'key' => [
                 'required',
-                new MasterKeyExistRule,
-                new MasterKeyBindRule
+                'string',
+                new MasterKeyPurchasedRule
             ]
         ];
     }

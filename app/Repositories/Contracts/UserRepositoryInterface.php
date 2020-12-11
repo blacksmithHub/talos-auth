@@ -15,4 +15,12 @@ interface UserRepositoryInterface extends Update
      * @param $key
      */
     public function authorize($id, $key);
+
+    /**
+     * Check if user is bindable
+     * 
+     * @param $id
+     * @param $key
+     */
+    public function isBindable($id, $key);
 }

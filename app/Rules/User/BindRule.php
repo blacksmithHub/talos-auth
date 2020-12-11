@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Rules\MasterKey;
+namespace App\Rules\User;
 
 use Illuminate\Contracts\Validation\Rule;
 
-use App\Repositories\Contracts\MasterKeyRepositoryInterface;
+use App\Repositories\Contracts\UserRepositoryInterface;
 
-class ExistRule implements Rule
+class BindRule implements Rule
 {
     /**
      * Create a new rule instance.
@@ -15,7 +15,7 @@ class ExistRule implements Rule
      */
     public function __construct()
     {
-        $this->repository = resolve(MasterKeyRepositoryInterface::class);
+        $this->repository = resolve(UserRepositoryInterface::class);
     }
 
     /**
@@ -27,7 +27,7 @@ class ExistRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        return $this->repository->isExists($value);
+        return $this->repository->isBindable($value, request()->key);
     }
 
     /**
@@ -37,6 +37,6 @@ class ExistRule implements Rule
      */
     public function message()
     {
-        return "Key doesn't exists";
+        return 'Invalid key';
     }
 }
