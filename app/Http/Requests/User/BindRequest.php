@@ -32,6 +32,14 @@ class BindRequest extends FormRequest
                 'numeric',
                 new UserBindRule
             ],
+            'username' => [
+                'required',
+                'string'
+            ],
+            'discriminator' => [
+                'required',
+                'string'
+            ],
             'key' => [
                 'required',
                 'string',

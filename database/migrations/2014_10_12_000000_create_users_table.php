@@ -20,6 +20,14 @@ class CreateUsersTable extends Migration
                 ->unique()
                 ->nullable();
 
+            $table->string('username')
+                ->unique()
+                ->nullable();
+            
+            $table->string('discriminator')
+                ->unique()
+                ->nullable();
+
             $table->string('master_key_id')
                 ->unique()
                 ->require();
