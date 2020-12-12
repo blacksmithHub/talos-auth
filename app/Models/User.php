@@ -23,6 +23,8 @@ class User extends Authenticatable
         'status',
     ];
 
+    public $keyType = 'string';
+
     /*
      * Get master key.
      *

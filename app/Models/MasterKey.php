@@ -19,6 +19,8 @@ class MasterKey extends Model
         'isAvailable'
     ];
 
+    public $keyType = 'string';
+
     /*
      * Get the user record.
      *
