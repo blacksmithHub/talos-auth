@@ -32,7 +32,7 @@ class VerifyRequest extends FormRequest
                 new UserAuthorizeRule
             ],
             'key' => [
-                'required',
+                'nullable',
                 'string',
                 new MasterKeyPurchasedRule
             ]

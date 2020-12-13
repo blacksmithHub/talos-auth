@@ -28,7 +28,9 @@ class UserRepository extends Repository implements UserRepositoryInterface
     public function authorize($id, $key) {
         $model = $this->model->where('discord_id', $id)->where('status', 'active')->with('masterKey')->first();
 
-        return ($model && $model->masterKey && $model->masterKey->key === $key);
+        if($key && $model && $model->masterKey && $model->masterKey->key !== $key) return null;
+
+        return $model;
     }
 
     /**
