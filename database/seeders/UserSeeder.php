@@ -19,9 +19,7 @@ class UserSeeder extends Seeder
         DB::beginTransaction();
 
         try {
-            $masterKey = MasterKey::factory()->create([
-                'isAvailable' => false
-            ]);
+            $masterKey = MasterKey::factory()->create();
 
             User::create([
                 'master_key_id' => $masterKey->id
