@@ -41,7 +41,7 @@ class MasterKeyRepository extends Repository implements MasterKeyRepositoryInter
 
         $model = $model->with('user')->first();
 
-        return $model->user->where('discord_id', $discord_id)->first();
+        return ($model->user->discord_id === $discord_id);
     }
 
     /**
@@ -57,7 +57,9 @@ class MasterKeyRepository extends Repository implements MasterKeyRepositoryInter
 
         $model = $model->with('user')->first();
 
-        return $model->user->where('status', 'active')->first();
+        if($model->user->status === 'idle') return null;
+
+        return $model;
     }
 
     /**
