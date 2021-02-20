@@ -17,3 +17,4 @@ use App\Http\Controllers\CustomerController;
 Route::post('bind', [CustomerController::class, 'bind']);
 Route::post('unbind', [CustomerController::class, 'unbind']);
 Route::post('verify', [CustomerController::class, 'verify']);
+Route::post('me', [CustomerController::class, 'me']);

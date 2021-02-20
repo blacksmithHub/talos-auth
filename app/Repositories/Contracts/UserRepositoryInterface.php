@@ -14,4 +14,11 @@ interface UserRepositoryInterface extends Update
      * @param $discordId
      */
     public function isExist($discordId);
+
+    /**
+     * Return user info.
+     * 
+     * @param $discordId
+     */
+    public function me($discordId);
 }

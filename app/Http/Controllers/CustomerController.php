@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\Contracts\CustomerServiceInterface;
-use App\Http\Requests\Customer\{ BindRequest, UnbindRequest, VerifyRequest };
+use App\Http\Requests\Customer\{ BindRequest, UnbindRequest, VerifyRequest, MeRequest };
 
 class CustomerController extends Controller
 {
@@ -55,5 +55,16 @@ class CustomerController extends Controller
     public function verify(VerifyRequest $request)
     {
         return $this->services->verify($request->validated());
+    }
+
+    /**
+     * Return a customer info.
+     *
+     * @param  \App\Http\Requests\Customer\MeRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function me(MeRequest $request)
+    {
+        return $this->services->me($request->validated());
     }
 }

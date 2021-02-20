@@ -24,4 +24,11 @@ interface CustomerServiceInterface
      * @param $request
      */
     public function verify($request);
+
+    /**
+     * Return customer info.
+     * 
+     * @param $request
+     */
+    public function me($request);
 }

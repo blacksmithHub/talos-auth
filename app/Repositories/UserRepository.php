@@ -26,6 +26,16 @@ class UserRepository extends Repository implements UserRepositoryInterface
      */
     public function isExist($discordId) 
     {
-        return $this->model->where('discord_id', $discordId)->first();
+        return $this->model->where('discord_id', $discordId)->exists();
+    }
+
+    /**
+     * Return user info.
+     * 
+     * @param $discordId
+     */
+    public function me($discordId)
+    {
+        return $this->model->where('discord_id', $discordId)->with('masterKey')->first();
     }
 }

@@ -6,7 +6,6 @@ use Illuminate\Support\Arr;
 
 use App\Repositories\Contracts\{UserRepositoryInterface, MasterKeyRepositoryInterface};
 use App\Services\Contracts\CustomerServiceInterface;
-use App\Models\User;
 
 class CustomerService extends Service implements CustomerServiceInterface
 {
@@ -14,10 +13,9 @@ class CustomerService extends Service implements CustomerServiceInterface
      * Create the service instance and inject its repository.
      *
      */
-    public function __construct(UserRepositoryInterface $userRepository, User $user, MasterKeyRepositoryInterface $masterKeyRepository)
+    public function __construct(UserRepositoryInterface $userRepository, MasterKeyRepositoryInterface $masterKeyRepository)
     {
         $this->userRepository = $userRepository;
-        $this->user = $user;
         $this->masterKeyRepository = $masterKeyRepository;
     }
 
@@ -26,7 +24,8 @@ class CustomerService extends Service implements CustomerServiceInterface
      * 
      * @param $request
      */
-    public function bind($request) {
+    public function bind($request) 
+    {
         $request = Arr::add($request, 'master_key_id', 1);
 
         Arr::pull($request, 'key');
@@ -41,8 +40,9 @@ class CustomerService extends Service implements CustomerServiceInterface
      * 
      * @param $request
      */
-    public function unbind($request) {
-        $user = $this->user->where('discord_id', Arr::get($request, 'discord_id'))->first();
+    public function unbind($request) 
+    {
+        $user = $this->userRepository->me(Arr::get($request, 'discord_id'));
 
         // TODO: delete access token
 
@@ -54,7 +54,18 @@ class CustomerService extends Service implements CustomerServiceInterface
      * 
      * @param $request
      */
-    public function verify($request) {
+    public function verify($request) 
+    {
         return $this->masterKeyRepository->isAuthenticated(Arr::get($request, 'key'), Arr::get($request, 'discord_id'));
+    }
+
+    /**
+     * Return customer info.
+     * 
+     * @param $request
+     */
+    public function me($request)
+    {
+        return $this->userRepository->me(Arr::get($request, 'discord_id'));
     }
 }
