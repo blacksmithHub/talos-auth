@@ -6,6 +6,7 @@ use Illuminate\Support\Arr;
 
 use App\Repositories\Contracts\{UserRepositoryInterface, MasterKeyRepositoryInterface};
 use App\Services\Contracts\CustomerServiceInterface;
+use App\Models\MasterKey;
 
 class CustomerService extends Service implements CustomerServiceInterface
 {
@@ -13,10 +14,11 @@ class CustomerService extends Service implements CustomerServiceInterface
      * Create the service instance and inject its repository.
      *
      */
-    public function __construct(UserRepositoryInterface $userRepository, MasterKeyRepositoryInterface $masterKeyRepository)
+    public function __construct(UserRepositoryInterface $userRepository, MasterKeyRepositoryInterface $masterKeyRepository, MasterKey $masterKey)
     {
         $this->userRepository = $userRepository;
         $this->masterKeyRepository = $masterKeyRepository;
+        $this->masterKey = $masterKey;
     }
 
     /**
@@ -26,7 +28,9 @@ class CustomerService extends Service implements CustomerServiceInterface
      */
     public function bind($request) 
     {
-        $request = Arr::add($request, 'master_key_id', 1);
+        $key = $this->masterKey->where('key', Arr::get($request, 'key'))->first();
+
+        $request = Arr::add($request, 'master_key_id', $key->id);
 
         Arr::pull($request, 'key');
 
