@@ -4,9 +4,7 @@ namespace App\Http\Requests\Customer;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-use App\Rules\MasterKey\AuthenticateRule;
-
-class UnbindRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,16 +24,10 @@ class UnbindRequest extends FormRequest
     public function rules()
     {
         return [
-            'discord_id' => [
-                'required',
-                'numeric',
-                'exists:App\Models\User,discord_id',
-            ],
             'key' => [
                 'required',
                 'string',
-                'exists:App\Models\MasterKey,key',
-                new AuthenticateRule
+                'exists:App\Models\MasterKey,key'
             ]
         ];
     }

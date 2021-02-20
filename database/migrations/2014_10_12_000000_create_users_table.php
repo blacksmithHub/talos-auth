@@ -32,6 +32,10 @@ class CreateUsersTable extends Migration
                 ->unique()
                 ->require();
                 
+            $table->string('status')
+                ->require()
+                ->default('idle');
+                
             $table->timestamps();
         });
     }

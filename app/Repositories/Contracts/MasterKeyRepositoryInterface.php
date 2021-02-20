@@ -18,4 +18,18 @@ interface MasterKeyRepositoryInterface
      * @param $discord_id
      */
     public function isAuthenticated($key, $discord_id);
+
+    /**
+     * Verify key
+     * 
+     * @param $key
+     */
+    public function verify($key);
+
+    /**
+     * Return master key info.
+     * 
+     * @param $key
+     */
+    public function info($key);
 }

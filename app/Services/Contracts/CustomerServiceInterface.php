@@ -31,4 +31,18 @@ interface CustomerServiceInterface
      * @param $request
      */
     public function me($request);
+
+    /**
+     * Login user.
+     * 
+     * @param $request
+     */
+    public function login($request);
+
+    /**
+     * Reset user.
+     * 
+     * @param $request
+     */
+    public function reset($request);
 }

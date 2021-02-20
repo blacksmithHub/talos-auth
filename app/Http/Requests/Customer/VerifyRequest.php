@@ -24,13 +24,10 @@ class VerifyRequest extends FormRequest
     public function rules()
     {
         return [
-            'discord_id' => [
-                'required',
-                'numeric'
-            ],
             'key' => [
                 'required',
-                'string'
+                'string',
+                'exists:App\Models\MasterKey,key',
             ]
         ];
     }

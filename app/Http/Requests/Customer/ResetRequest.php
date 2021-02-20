@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 use App\Rules\MasterKey\AuthenticateRule;
 
-class UnbindRequest extends FormRequest
+class ResetRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,7 +29,7 @@ class UnbindRequest extends FormRequest
             'discord_id' => [
                 'required',
                 'numeric',
-                'exists:App\Models\User,discord_id',
+                'exists:App\Models\User,discord_id'
             ],
             'key' => [
                 'required',

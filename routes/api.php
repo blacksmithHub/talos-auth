@@ -18,3 +18,5 @@ Route::post('bind', [CustomerController::class, 'bind']);
 Route::post('unbind', [CustomerController::class, 'unbind']);
 Route::post('verify', [CustomerController::class, 'verify']);
 Route::post('me', [CustomerController::class, 'me']);
+Route::post('login', [CustomerController::class, 'login']);
+Route::post('reset', [CustomerController::class, 'reset']);

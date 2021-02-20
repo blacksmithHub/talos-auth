@@ -19,7 +19,8 @@ class User extends Authenticatable
         'discord_id',
         'username',
         'discriminator',
-        'master_key_id'
+        'master_key_id',
+        'status'
     ];
 
     public $keyType = 'string';

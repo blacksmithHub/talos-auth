@@ -56,7 +56,7 @@ class CustomerService extends Service implements CustomerServiceInterface
      */
     public function verify($request) 
     {
-        return $this->masterKeyRepository->isAuthenticated(Arr::get($request, 'key'), Arr::get($request, 'discord_id'));
+        return $this->masterKeyRepository->verify(Arr::get($request, 'key'));
     }
 
     /**
@@ -67,5 +67,39 @@ class CustomerService extends Service implements CustomerServiceInterface
     public function me($request)
     {
         return $this->userRepository->me(Arr::get($request, 'discord_id'));
+    }
+
+    /**
+     * Login user.
+     * 
+     * @param $request
+     */
+    public function login($request)
+    {
+        // TODO: use access token for login
+
+        $isActive = $this->masterKeyRepository->verify(Arr::get($request, 'key'));
+        
+        if($isActive) return null;
+        
+        $data = $this->masterKeyRepository->info(Arr::get($request, 'key'));
+
+        if(!$data) return null;
+
+        return $this->userRepository->update($data->user->id, ['status' => 'active']);
+    }
+
+    /**
+     * Reset user.
+     * 
+     * @param $request
+     */
+    public function reset($request)
+    {
+        $user = $this->userRepository->me(Arr::get($request, 'discord_id'));
+
+        // TODO: delete access token
+
+        return $this->userRepository->update($user->id, ['status' => 'idle']);
     }
 }

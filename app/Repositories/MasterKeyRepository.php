@@ -43,4 +43,34 @@ class MasterKeyRepository extends Repository implements MasterKeyRepositoryInter
 
         return $model->user->where('discord_id', $discord_id)->first();
     }
+
+    /**
+     * Verify key
+     * 
+     * @param $key
+     */
+    public function verify($key)
+    {
+        $model = $this->model->where('key', $key)->where('isAvailable', false);
+
+        if(!$model->has('user')->first()) return null;
+
+        $model = $model->with('user')->first();
+
+        return $model->user->where('status', 'active')->first();
+    }
+
+    /**
+     * Return master key info.
+     * 
+     * @param $key
+     */
+    public function info($key)
+    {
+        $model = $this->model->where('key', $key)->where('isAvailable', false);
+
+        if(!$model->has('user')->first()) return null;
+
+        return $model->with('user')->first();
+    }
 }

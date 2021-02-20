@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\Contracts\CustomerServiceInterface;
-use App\Http\Requests\Customer\{ BindRequest, UnbindRequest, VerifyRequest, MeRequest };
+use App\Http\Requests\Customer\{ BindRequest, UnbindRequest, VerifyRequest, MeRequest, LoginRequest, ResetRequest };
 
 class CustomerController extends Controller
 {
@@ -66,5 +66,27 @@ class CustomerController extends Controller
     public function me(MeRequest $request)
     {
         return $this->services->me($request->validated());
+    }
+
+    /**
+     * Login user.
+     *
+     * @param  \App\Http\Requests\Customer\LoginRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function login(LoginRequest $request)
+    {
+        return $this->services->login($request->validated());
+    }
+
+    /**
+     * Reset user.
+     *
+     * @param  \App\Http\Requests\Customer\ResetRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function reset(ResetRequest $request)
+    {
+        return $this->services->reset($request->validated());
     }
 }

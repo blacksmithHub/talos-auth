@@ -43,6 +43,7 @@ class BindRequest extends FormRequest
             'key' => [
                 'required',
                 'string',
+                'exists:App\Models\MasterKey,key',
                 new MasterKeyInUseRule
             ]
         ];
