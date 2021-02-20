@@ -1,13 +1,10 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\Customer;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-use App\Rules\MasterKey\PurchasedRule as MasterKeyPurchasedRule;
-use App\Rules\User\BindRule as UserBindRule;
-
-class BindRequest extends FormRequest
+class VerifyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,21 +26,11 @@ class BindRequest extends FormRequest
         return [
             'discord_id' => [
                 'required',
-                'numeric',
-                new UserBindRule
-            ],
-            'username' => [
-                'required',
-                'string'
-            ],
-            'discriminator' => [
-                'required',
-                'string'
+                'numeric'
             ],
             'key' => [
                 'required',
-                'string',
-                new MasterKeyPurchasedRule
+                'string'
             ]
         ];
     }

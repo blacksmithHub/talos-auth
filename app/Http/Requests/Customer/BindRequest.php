@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\Customer;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-use App\Rules\User\AuthorizeRule as UserAuthorizeRule;
-use App\Rules\MasterKey\PurchasedRule as MasterKeyPurchasedRule;
-class VerifyRequest extends FormRequest
+use App\Rules\MasterKey\InUseRule as MasterKeyInUseRule;
+use App\Rules\User\ExistRule as UserExistRule;
+
+class BindRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,12 +30,20 @@ class VerifyRequest extends FormRequest
             'discord_id' => [
                 'required',
                 'numeric',
-                new UserAuthorizeRule
+                new UserExistRule
+            ],
+            'username' => [
+                'required',
+                'string'
+            ],
+            'discriminator' => [
+                'required',
+                'string'
             ],
             'key' => [
-                'nullable',
+                'required',
                 'string',
-                new MasterKeyPurchasedRule
+                new MasterKeyInUseRule
             ]
         ];
     }

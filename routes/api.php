@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +14,6 @@ use App\Http\Controllers\UserController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::put('bind', [UserController::class, 'bind']);
-Route::put('unbind', [UserController::class, 'unbind']);
-Route::post('verify', [UserController::class, 'verify']);
+Route::post('bind', [CustomerController::class, 'bind']);
+Route::post('unbind', [CustomerController::class, 'unbind']);
+Route::post('verify', [CustomerController::class, 'verify']);

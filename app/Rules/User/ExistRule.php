@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Rule;
 
 use App\Repositories\Contracts\UserRepositoryInterface;
 
-class AuthorizeRule implements Rule
+class ExistRule implements Rule
 {
     /**
      * Create a new rule instance.
@@ -27,7 +27,7 @@ class AuthorizeRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        return $this->repository->authorize($value, request()->key);
+        return !$this->repository->isExist($value);
     }
 
     /**
@@ -37,6 +37,6 @@ class AuthorizeRule implements Rule
      */
     public function message()
     {
-        return 'Unauthorized';
+        return "Invalid user";
     }
 }

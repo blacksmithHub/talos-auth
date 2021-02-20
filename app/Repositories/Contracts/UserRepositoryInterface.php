@@ -9,18 +9,9 @@ use App\Repositories\Support\{
 interface UserRepositoryInterface extends Update
 {
     /**
-     * Check if user and key is authorized
+     * Check if user exist.
      * 
-     * @param $id
-     * @param $key
+     * @param $discordId
      */
-    public function authorize($id, $key);
-
-    /**
-     * Check if user is bindable
-     * 
-     * @param $id
-     * @param $key
-     */
-    public function isBindable($id, $key);
+    public function isExist($discordId);
 }

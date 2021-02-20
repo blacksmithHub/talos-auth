@@ -26,8 +26,7 @@ class UserFactory extends Factory
             'discord_id' => $this->faker->unique()->numberBetween(100, 99999),
             'username' => $this->faker->userName,
             'discriminator' => $this->faker->randomDigit,
-            'master_key_id' => $this->faker->unique()->numberBetween(1, 1000),
-            'status' => 'active'
+            'master_key_id' => $this->faker->unique()->numberBetween(1, 1000)
         ];
     }
 }

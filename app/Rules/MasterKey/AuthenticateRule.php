@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Rules\User;
+namespace App\Rules\MasterKey;
 
 use Illuminate\Contracts\Validation\Rule;
 
-use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Repositories\Contracts\MasterKeyRepositoryInterface;
 
-class BindRule implements Rule
+class AuthenticateRule implements Rule
 {
     /**
      * Create a new rule instance.
@@ -15,7 +15,7 @@ class BindRule implements Rule
      */
     public function __construct()
     {
-        $this->repository = resolve(UserRepositoryInterface::class);
+        $this->repository = resolve(MasterKeyRepositoryInterface::class);
     }
 
     /**
@@ -27,7 +27,7 @@ class BindRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        return $this->repository->isBindable($value, request()->key);
+        return $this->repository->isAuthenticated($value, request()->discord_id);
     }
 
     /**
@@ -37,6 +37,6 @@ class BindRule implements Rule
      */
     public function message()
     {
-        return 'Invalid key';
+        return "Unauthenticated";
     }
 }

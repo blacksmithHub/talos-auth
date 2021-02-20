@@ -20,34 +20,12 @@ class UserRepository extends Repository implements UserRepositoryInterface
     }
 
     /**
-     * Check if user and key is authorized
+     * Check if user exist.
      * 
-     * @param $id
-     * @param $key
+     * @param $discordId
      */
-    public function authorize($id, $key) {
-        $model = $this->model->where('discord_id', $id)->where('status', 'active')->with('masterKey')->first();
-
-        if($key && $model && $model->masterKey && $model->masterKey->key !== $key) return null;
-
-        return $model;
-    }
-
-    /**
-     * Check if user is bindable
-     * 
-     * @param $id
-     * @param $key
-     */
-    public function isBindable($id, $key) {
-        $model = $this->model->where('discord_id', $id)->with('masterKey')->first();
-
-        if(!$model && $this->masterKey->hasUser($key)) return false;
-
-        if($model && $model->masterKey && $model->masterKey->key !== $key) return false;
-
-        if($model && $model->status === 'active') return false;
-
-        return true;
+    public function isExist($discordId) 
+    {
+        return $this->model->where('discord_id', $discordId)->first();
     }
 }

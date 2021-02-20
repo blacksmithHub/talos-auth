@@ -12,7 +12,7 @@ class ServicesServiceProvider extends ServiceProvider
      * @var array
      */
     public $bindings = [
-        \App\Services\Contracts\UserServiceInterface::class => \App\Services\UserService::class,
+        \App\Services\Contracts\CustomerServiceInterface::class => \App\Services\CustomerService::class,
     ];
 
     /**

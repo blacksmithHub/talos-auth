@@ -28,13 +28,9 @@ class CreateUsersTable extends Migration
                 ->unique()
                 ->nullable();
 
-            $table->string('master_key_id')
+            $table->integer('master_key_id')
                 ->unique()
                 ->require();
-                
-            $table->string('status')
-                ->require()
-                ->default('idle');
                 
             $table->timestamps();
         });

@@ -5,16 +5,17 @@ namespace App\Repositories\Contracts;
 interface MasterKeyRepositoryInterface
 {
     /**
-     * Check if key is purchased
+     * Check if key is in use.
      * 
      * @param $key
      */
-    public function isPurchased($key);
+    public function isInUse($key);
 
     /**
-     * Check if key has user
+     * Check if key and user is authenticated.
      * 
      * @param $key
+     * @param $discord_id
      */
-    public function hasUser($key);
+    public function isAuthenticated($key, $discord_id);
 }

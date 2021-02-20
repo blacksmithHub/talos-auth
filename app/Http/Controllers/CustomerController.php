@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\Contracts\UserServiceInterface;
-use App\Http\Requests\User\{ BindRequest, VerifyRequest };
+use App\Services\Contracts\CustomerServiceInterface;
+use App\Http\Requests\Customer\{ BindRequest, UnbindRequest, VerifyRequest };
 
-class UserController extends Controller
+class CustomerController extends Controller
 {
     /**
      * The service instance.
      *
-     * @var \App\Services\UserServiceInterface
+     * @var \App\Services\CustomerServiceInterface
      */
     protected $services;
     
     /**
      * Create the controller instance and resolve its service.
      * 
-     * @param \App\Services\Contracts\UserServiceInterface $services
+     * @param \App\Services\Contracts\CustomerServiceInterface $services
      */
-    public function __construct(UserServiceInterface $services)
+    public function __construct(CustomerServiceInterface $services)
     {
         $this->services = $services;
     }
@@ -27,7 +27,7 @@ class UserController extends Controller
     /**
      * Bind a specific key.
      *
-     * @param  \App\Http\Requests\User\BindRequest $request
+     * @param  \App\Http\Requests\Customer\BindRequest $request
      * @return \Illuminate\Http\Response
      */
     public function bind(BindRequest $request)
@@ -38,18 +38,18 @@ class UserController extends Controller
     /**
      * Unbind a specific key.
      *
-     * @param  \App\Http\Requests\User\VerifyRequest $request
+     * @param  \App\Http\Requests\Customer\UnbindRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function unbind(VerifyRequest $request)
+    public function unbind(UnbindRequest $request)
     {
         return $this->services->unbind($request->validated());
     }
 
     /**
-     * Verify a user key.
+     * Verify a specific key.
      *
-     * @param  \App\Http\Requests\User\VerifyRequest $request
+     * @param  \App\Http\Requests\Customer\VerifyRequest $request
      * @return \Illuminate\Http\Response
      */
     public function verify(VerifyRequest $request)

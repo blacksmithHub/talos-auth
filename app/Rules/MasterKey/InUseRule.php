@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Rule;
 
 use App\Repositories\Contracts\MasterKeyRepositoryInterface;
 
-class PurchasedRule implements Rule
+class InUseRule implements Rule
 {
     /**
      * Create a new rule instance.
@@ -27,7 +27,7 @@ class PurchasedRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        return $this->repository->isPurchased($value);
+        return !$this->repository->isInUse($value);
     }
 
     /**
@@ -37,6 +37,6 @@ class PurchasedRule implements Rule
      */
     public function message()
     {
-        return "Key doesn't exists";
+        return "Invalid key";
     }
 }
