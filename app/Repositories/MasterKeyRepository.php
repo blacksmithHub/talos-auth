@@ -59,7 +59,7 @@ class MasterKeyRepository extends Repository implements MasterKeyRepositoryInter
 
         if($model->user->status === 'idle') return null;
 
-        return $model;
+	return $model;
     }
 
     /**

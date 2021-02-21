@@ -18,7 +18,7 @@ class CustomerService extends Service implements CustomerServiceInterface
     {
         $this->userRepository = $userRepository;
         $this->masterKeyRepository = $masterKeyRepository;
-        $this->masterKey = $masterKey;
+	$this->masterKey = $masterKey;
     }
 
     /**
@@ -28,7 +28,7 @@ class CustomerService extends Service implements CustomerServiceInterface
      */
     public function bind($request) 
     {
-        $key = $this->masterKey->where('key', Arr::get($request, 'key'))->first();
+	$key = $this->masterKey->where('key', Arr::get($request, 'key'))->first();
 
         $request = Arr::add($request, 'master_key_id', $key->id);
 
